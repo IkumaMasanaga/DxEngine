@@ -16,7 +16,7 @@ namespace dxe {
 		// Šî’êƒNƒ‰ƒX‚Å¶¬‚·‚é‚½‚ß
 		friend class t2k::Singleton<BGMManager>;
 		// releaceAll‚ğŒÄ‚Ô‚½‚ß
-		friend class UniPlusEngine;
+		friend class DxEngine;
 
 		BGMManager() {}
 

@@ -4,7 +4,7 @@
 
 namespace dxe {
 
-	class Camera2D final : public Mover {
+	class Camera2D : public Mover {
 	public:
 		using SharedPtr = std::shared_ptr<Camera2D>;
 		using WeakPtr = std::weak_ptr<Camera2D>;

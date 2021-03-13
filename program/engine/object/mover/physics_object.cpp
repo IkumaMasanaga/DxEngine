@@ -12,13 +12,9 @@ namespace dxe {
 
 	void PhysicsObject::onCollision(CollisionObject::SharedPtr other, std::shared_ptr<CollisionRect> rect, const CorrectDirection direction) {
 
-		// ï‚ê≥ÇµÇΩÇ∆Ç´ÇÃÇ›ñÄéCÇÃåvéZé¿çs
+		// ï‚ê≥ÇµÇΩÇ∆Ç´ÇÃÇ›
 		if (direction != CorrectDirection::NONE) {
-			t2k::Vector3 gravity = Physics::getInstance().gravity_;
-			gravity.normalize();
-			gravity.x = std::abs(gravity.x);
-			gravity.y = std::abs(gravity.y);
-			velocity_ *= (t2k::Vector3::ONE - ((t2k::Vector3::ONE - gravity) * friction_) * gravity_scale_);
+			velocity_ -= ((velocity_ * friction_) * t2k::Time::getDeltaTime());
 
 			if (direction == CorrectDirection::UP || direction == CorrectDirection::DOWN) {
 				velocity_.y = 0;

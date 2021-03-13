@@ -64,6 +64,9 @@ namespace dxe {
 		// アニメーションの再生
 		void play(const std::string& animation_name, const float complete_time, const bool is_loop);
 
+		// 現在再生中のアニメーションの名前の取得
+		inline std::string getNowAnimationName() const { return now_name_; }
+
 		// アニメーション再生中か
 		inline bool isPlaying() const { return is_loop_ || !animation_.isComplete(); }
 

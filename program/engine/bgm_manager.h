@@ -52,20 +52,20 @@ namespace dxe {
 		std::shared_ptr<BGM> registBGM(const std::string& name, const std::string& file_path);
 
 		// BGM‚Ìæ“¾
-		std::shared_ptr<BGM> getBGM(const std::string& name);
+		std::shared_ptr<BGM> getBGM(const std::string& name) const;
 
 		// BGM‚ÌÄ¶
 		// ‘æ“ñˆø”‚É true ‚ğİ’è‚·‚é‚Æ¡Ä¶’†‚ÌBGM‚ğ~‚ß‚¸‚Éd‚Ë‚ÄÄ¶‚·‚é
-		std::shared_ptr<BGM> play(const std::string& name, const bool is_duplicate = false);
+		std::shared_ptr<BGM> play(const std::string& name, const bool is_duplicate = false) const;
 
 		// Ä¶’†‚ÌBGM‚Ì’â~
-		void stop();
+		void stop() const;
 		
 		// BGM‚Ì’â~
-		void stop(const std::string& name);
+		void stop(const std::string& name) const;
 
 		// BGM‚ªÄ¶’†‚©
-		bool isPlaying(const std::string& name);
+		bool isPlaying(const std::string& name) const;
 
 		//====================================================================================================
 	};

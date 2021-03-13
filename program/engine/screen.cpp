@@ -11,18 +11,23 @@ namespace dxe {
 
 	void Screen::renderToTexture() {
 
-		std::list<std::shared_ptr<RenderObject>> renders = getScene()->renders_;
-
-		renders.sort([](const std::shared_ptr<RenderObject> left, const std::shared_ptr<RenderObject> right) {
+		getScene()->renders_.sort([](const std::shared_ptr<RenderObject> left, const std::shared_ptr<RenderObject> right) {
 			return left->render_priority_ < right->render_priority_;
 		});
 
 		SetDrawScreen(texture_->getImage());
 		ClearDrawScreen();
 
-		for (auto obj : renders) {
-			if (!obj->isActive()) continue;
-			obj->render(shared_from_this());
+		std::list<std::shared_ptr<RenderObject>>::iterator it = getScene()->renders_.begin();
+		while (it != getScene()->renders_.end()) {
+			if (!(*it)->isAlive()) {
+				it = getScene()->renders_.erase(it);
+				continue;
+			}
+			if ((*it)->isActive()) {
+				(*it)->render(shared_from_this());
+			}
+			++it;
 		}
 
 		CollisionManager& collision_manager = CollisionManager::getInstance();

@@ -7,7 +7,7 @@ namespace dxe {
 
 	void SEManager::setMasterVolume(const float master_volume) {
 		master_volume_ = master_volume;
-		for (auto se : se_map_) {
+		for (const auto& se : se_map_) {
 			ChangeVolumeSoundMem((int)(master_volume_ * (se.second->getVolume() * 255)), se.second->getAudio()->getSound());
 		}
 	}
@@ -22,8 +22,8 @@ namespace dxe {
 		return ptr;
 	}
 
-	std::shared_ptr<SE> SEManager::getSE(const std::string& name) {
-		std::unordered_map<std::string, std::shared_ptr<SE>>::iterator it = se_map_.find(name);
+	std::shared_ptr<SE> SEManager::getSE(const std::string& name) const {
+		std::unordered_map<std::string, std::shared_ptr<SE>>::const_iterator it = se_map_.find(name);
 		if (it == se_map_.end()) {
 			warningMassage(("SE‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½ : " + name).c_str());
 			return nullptr;
@@ -31,8 +31,8 @@ namespace dxe {
 		return it->second;
 	}
 
-	std::shared_ptr<SE> SEManager::play(const std::string& name) {
-		std::unordered_map<std::string, std::shared_ptr<SE>>::iterator it = se_map_.find(name);
+	std::shared_ptr<SE> SEManager::play(const std::string& name) const {
+		std::unordered_map<std::string, std::shared_ptr<SE>>::const_iterator it = se_map_.find(name);
 		if (it == se_map_.end()) {
 			warningMassage(("SE‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½ : " + name).c_str());
 			return nullptr;
@@ -47,14 +47,14 @@ namespace dxe {
 		return it->second;
 	}
 
-	void SEManager::stop() {
-		for (auto se : se_map_) {
+	void SEManager::stop() const {
+		for (const auto& se : se_map_) {
 			StopSoundMem(se.second->getAudio()->getSound());
 		}
 	}
 
-	void SEManager::stop(const std::string& name) {
-		std::unordered_map<std::string, std::shared_ptr<SE>>::iterator it = se_map_.find(name);
+	void SEManager::stop(const std::string& name) const {
+		std::unordered_map<std::string, std::shared_ptr<SE>>::const_iterator it = se_map_.find(name);
 		if (it == se_map_.end()) {
 			warningMassage(("SE‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½ : " + name).c_str());
 			return;
@@ -62,8 +62,8 @@ namespace dxe {
 		StopSoundMem(it->second->getAudio()->getSound());
 	}
 
-	bool SEManager::isPlaying(const std::string& name) {
-		std::unordered_map<std::string, std::shared_ptr<SE>>::iterator it = se_map_.find(name);
+	bool SEManager::isPlaying(const std::string& name) const {
+		std::unordered_map<std::string, std::shared_ptr<SE>>::const_iterator it = se_map_.find(name);
 		if (it == se_map_.end()) {
 			warningMassage(("SE‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½ : " + name).c_str());
 			return false;

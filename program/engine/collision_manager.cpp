@@ -142,19 +142,19 @@ namespace dxe {
 	}
 
 	void CollisionManager::renderDebugArea(std::shared_ptr<Screen> screen) const {
-		for (auto cobj : collision_objects_) {
+		for (const auto& cobj : collision_objects_) {
 			t2k::Transform ot = cobj->getWorldTransform();
 			float crs = screen->getCamera2D()->render_scale_;
 			float scl = ot.scale_ * crs;
 			t2k::Transform ct = screen->getCamera2D()->getWorldTransform();
-			for (auto rect : cobj->collision_area_) {
-				ot.position_ += (t2k::Matrix::getRelativePosition(rect->center_, ot.rotation_) * ot.scale_);
+			for (const auto& rect : cobj->collision_area_) {
+				t2k::Vector3 p = ot.position_ + (t2k::Matrix::getRelativePosition(rect->center_, ot.rotation_) * ot.scale_);
 				int sw = screen->getWidth() >> 1;
 				int sh = screen->getHeight() >> 1;
-				int l = sw + (int)(((ot.position_.x - ct.position_.x) * crs) - ((rect->width_ >> 1) * scl));
-				int t = sh + (int)(((ot.position_.y - ct.position_.y) * crs) - ((rect->height_ >> 1) * scl));
-				int r = sw + (int)(((ot.position_.x - ct.position_.x) * crs) + ((rect->width_ >> 1) * scl));
-				int b = sh + (int)(((ot.position_.y - ct.position_.y) * crs) + ((rect->height_ >> 1) * scl));
+				int l = sw + (int)(((p.x - ct.position_.x) * crs) - ((rect->width_ >> 1) * scl));
+				int t = sh + (int)(((p.y - ct.position_.y) * crs) - ((rect->height_ >> 1) * scl));
+				int r = sw + (int)(((p.x - ct.position_.x) * crs) + ((rect->width_ >> 1) * scl));
+				int b = sh + (int)(((p.y - ct.position_.y) * crs) + ((rect->height_ >> 1) * scl));
 				SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
 				DrawFillBox(l, t, r, b, 0xFF00FF00);
 				DrawLineBox(l, t, r, b, 0xFFFFFFFF);

@@ -111,4 +111,13 @@ namespace dxe {
 		parent_.reset();
 	}
 
+	void Mover::destroyWithChild() {
+		Mover::SharedPtr child = getChild(0);
+		while (child) {
+			child->destroy();
+			child = child->getNext();
+		}
+		destroy();
+	}
+
 }

@@ -5,14 +5,12 @@
 namespace dxe {
 
 	// 物理演算の影響を受けるクラス
-	// 重力、摩擦、空気抵抗
+	// 重力、空気抵抗、摩擦
 	class PhysicsObject : public CollisionObject {
 	public:
 		using SharedPtr = std::shared_ptr<PhysicsObject>;
 		using WeakPtr = std::weak_ptr<PhysicsObject>;
 	private:
-		// velocity_を直接扱う為
-		friend class Physics;
 		// shared_from_this_constructorを呼ぶため
 		friend class t2k::SharedFactory<Object>;
 
@@ -48,20 +46,28 @@ namespace dxe {
 		//====================================================================================================
 		// メンバ変数
 
+		// 空気抵抗っぽい値
+		// 実際には時間単位でvelocity_を減少させる割合
+		t2k::Vector3 drag_ = t2k::Vector3(1.0f, 0.0f, 0.0f);
+
+		// 摩擦っぽい値
+		// 実際には時間単位で座標補正時にvelocity_を減少させる割合
+		t2k::Vector3 friction_ = t2k::Vector3(10.0f, 10.0f, 0.0f);
+
 		// 重力の影響割合
 		float gravity_scale_ = 1.0f;
-
-		// 摩擦割合
-		t2k::Vector3 friction_ = t2k::Vector3(0.8f, 0.8f, 0.0f);
-
-		// 空気抵抗割合
-		t2k::Vector3 drag_ = t2k::Vector3(0.02f, 0.0f, 0.0f);
 
 		//====================================================================================================
 		// メンバ関数
 
-		// 速さを足す
-		inline void addForce(const t2k::Vector3 force) { velocity_ += (force * t2k::Time::getDeltaTime()); }
+		// 速さの取得（参照用）
+		inline t2k::Vector3 getVelocity() const { return velocity_; }
+
+		// 速度に直接力を加える（時間単位）
+		inline void addForceTime(const t2k::Vector3& force) { velocity_ += (force * t2k::Time::getDeltaTime()); }
+
+		// 速度に直接力を加える（フレーム単位）
+		inline void addForceFrame(const t2k::Vector3& force) { velocity_ += force; }
 
 		//====================================================================================================
 	};

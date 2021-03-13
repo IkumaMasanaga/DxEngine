@@ -53,12 +53,12 @@ namespace dxe {
 		});
 
 		// スクリーン範囲内に描画
-		for (auto screen : screens_) {
+		for (const auto& screen : screens_) {
 			screen->renderToTexture();
 		}
 
 		// スクリーンの描画
-		for (auto screen : screens_) {
+		for (const auto& screen : screens_) {
 			screen->render();
 		}
 
@@ -66,15 +66,15 @@ namespace dxe {
 
 	std::list<std::shared_ptr<Object>> Scene::getObjects(const std::string& name) const {
 		std::list<std::shared_ptr<Object>> ret;
-		for (auto obj : updates_) {
+		for (const auto& obj : updates_) {
 			if (obj->getName() != name) continue;
 			ret.emplace_back(obj);
 		}
 		return ret;
 	}
 
-	std::shared_ptr<Screen> Scene::getScreen(const std::string& name) {
-		for (auto screen : screens_) {
+	std::shared_ptr<Screen> Scene::getScreen(const std::string& name) const {
+		for (const auto& screen : screens_) {
 			if (screen->getRegisteredName() != name) continue;
 			return screen;
 		}
@@ -83,7 +83,7 @@ namespace dxe {
 	}
 
 	std::shared_ptr<Screen> Scene::createScreenToScene(const std::string& screen_name, std::shared_ptr<Camera2D> camera, const int width, const int height) {
-		for (auto screen : screens_) {
+		for (const auto& screen : screens_) {
 			if (screen->getRegisteredName() != screen_name) continue;
 			warningMassage(("Screen名が重複しています : " + screen_name).c_str());
 			return nullptr;

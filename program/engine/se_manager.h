@@ -52,19 +52,19 @@ namespace dxe {
 		std::shared_ptr<SE> registSE(const std::string& name, const std::string& file_path);
 
 		// SE‚Ìæ“¾
-		std::shared_ptr<SE> getSE(const std::string& name);
+		std::shared_ptr<SE> getSE(const std::string& name) const;
 		
 		// SE‚ÌÄ¶
-		std::shared_ptr<SE> play(const std::string& name);
+		std::shared_ptr<SE> play(const std::string& name) const;
 
 		// Ä¶’†‚ÌSE‚Ì’â~
-		void stop();
+		void stop() const;
 
 		// SE‚Ì’â~
-		void stop(const std::string& name);
+		void stop(const std::string& name) const;
 
 		// SE‚ªÄ¶’†‚©
-		bool isPlaying(const std::string& name);
+		bool isPlaying(const std::string& name) const;
 
 		//====================================================================================================
 	};

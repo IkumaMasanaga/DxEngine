@@ -7,7 +7,7 @@ namespace dxe {
 
 	void BGMManager::setMasterVolume(const float master_volume) {
 		master_volume_ = master_volume;
-		for (auto bgm : bgm_map_) {
+		for (const auto& bgm : bgm_map_) {
 			ChangeVolumeSoundMem((int)(master_volume_ * (bgm.second->getVolume() * 255)), bgm.second->getAudio()->getSound());
 		}
 	}
@@ -22,8 +22,8 @@ namespace dxe {
 		return ptr;
 	}
 
-	std::shared_ptr<BGM> BGMManager::getBGM(const std::string& name) {
-		std::unordered_map<std::string, std::shared_ptr<BGM>>::iterator it = bgm_map_.find(name);
+	std::shared_ptr<BGM> BGMManager::getBGM(const std::string& name) const {
+		std::unordered_map<std::string, std::shared_ptr<BGM>>::const_iterator it = bgm_map_.find(name);
 		if (it == bgm_map_.end()) {
 			warningMassage(("BGM‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½ : " + name).c_str());
 			return nullptr;
@@ -31,9 +31,9 @@ namespace dxe {
 		return it->second;
 	}
 
-	std::shared_ptr<BGM> BGMManager::play(const std::string& name, const bool is_duplicate) {
+	std::shared_ptr<BGM> BGMManager::play(const std::string& name, const bool is_duplicate) const {
 		if (!is_duplicate) stop();
-		std::unordered_map<std::string, std::shared_ptr<BGM>>::iterator it = bgm_map_.find(name);
+		std::unordered_map<std::string, std::shared_ptr<BGM>>::const_iterator it = bgm_map_.find(name);
 		if (it == bgm_map_.end()) {
 			warningMassage(("BGM‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½ : " + name).c_str());
 			return nullptr;
@@ -48,14 +48,14 @@ namespace dxe {
 		return it->second;
 	}
 
-	void BGMManager::stop() {
-		for (auto bgm : bgm_map_) {
+	void BGMManager::stop() const {
+		for (const auto& bgm : bgm_map_) {
 			StopSoundMem(bgm.second->getAudio()->getSound());
 		}
 	}
 
-	void BGMManager::stop(const std::string& name) {
-		std::unordered_map<std::string, std::shared_ptr<BGM>>::iterator it = bgm_map_.find(name);
+	void BGMManager::stop(const std::string& name) const {
+		std::unordered_map<std::string, std::shared_ptr<BGM>>::const_iterator it = bgm_map_.find(name);
 		if (it == bgm_map_.end()) {
 			warningMassage(("BGM‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½ : " + name).c_str());
 			return;
@@ -63,8 +63,8 @@ namespace dxe {
 		StopSoundMem(it->second->getAudio()->getSound());
 	}
 
-	bool BGMManager::isPlaying(const std::string& name) {
-		std::unordered_map<std::string, std::shared_ptr<BGM>>::iterator it = bgm_map_.find(name);
+	bool BGMManager::isPlaying(const std::string& name) const {
+		std::unordered_map<std::string, std::shared_ptr<BGM>>::const_iterator it = bgm_map_.find(name);
 		if (it == bgm_map_.end()) {
 			warningMassage(("BGM‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½ : " + name).c_str());
 			return false;

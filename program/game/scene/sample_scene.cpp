@@ -57,13 +57,13 @@ void SampleScene::lateUpdate() {
 	}
 
 	if (t2k::Input::isKeyDown(t2k::Input::KEYBORD_UP)) {
-		player_->addForce(t2k::Vector3::UP * 50);
+		player_->addForceFrame(t2k::Vector3::UP * 5);
 	}
 	if (t2k::Input::isKeyDown(t2k::Input::KEYBORD_LEFT)) {
-		player_->addForce(t2k::Vector3::LEFT * 50);
+		player_->addForceTime(t2k::Vector3::LEFT * 50);
 	}
 	if (t2k::Input::isKeyDown(t2k::Input::KEYBORD_RIGHT)) {
-		player_->addForce(t2k::Vector3::RIGHT * 50);
+		player_->addForceTime(t2k::Vector3::RIGHT * 50);
 	}
 
 }

@@ -85,10 +85,13 @@ namespace dxe {
 		std::list<std::shared_ptr<Object>> getObjects(const std::string& name) const;
 
 		// Screenの取得
-		std::shared_ptr<Screen> getScreen(const std::string& name);
+		std::shared_ptr<Screen> getScreen(const std::string& name) const;
 
 		// Scene内にScreenを生成
 		std::shared_ptr<Screen> createScreenToScene(const std::string& screen_name, std::shared_ptr<Camera2D> camera, const int width, const int height);
+
+		//====================================================================================================
+		// static関数
 
 		// Sceneの生成
 		// テンプレート引数にはSceneクラスの派生クラスを指定する

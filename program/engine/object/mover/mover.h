@@ -83,6 +83,9 @@ namespace dxe {
 		// 自身が親から離脱
 		void popParent();
 
+		// 自身と子供の有効状態を変更
+		void setActiveWithChild(const bool is_active);
+
 		// 自身と子供をすべて消す
 		void destroyWithChild();
 

@@ -111,13 +111,24 @@ namespace dxe {
 		parent_.reset();
 	}
 
-	void Mover::destroyWithChild() {
+	void Mover::setActiveWithChild(const bool is_active) {
+		setActive(is_active);
 		Mover::SharedPtr child = getChild(0);
-		while (child) {
-			child->destroy();
-			child = child->getNext();
-		}
+		if (!child) return;
+		child->setActiveWithChild(is_active);
+		child = child->getNext();
+		if (!child) return;
+		child->setActiveWithChild(is_active);
+	}
+
+	void Mover::destroyWithChild() {
 		destroy();
+		Mover::SharedPtr child = getChild(0);
+		if (!child) return;
+		child->destroy();
+		child = child->getNext();
+		if (!child) return;
+		child->destroy();
 	}
 
 }
